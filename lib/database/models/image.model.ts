@@ -1,24 +1,25 @@
-import { model, models, Schema, Document } from "mongoose";
+import { model, models, Schema} from "mongoose";
+// import { model, models, Schema, Document } from "mongoose";
 
-interface IImage extends Document{
-    title: string;
-    transformation: string;                
-    publicId: string;                      
-    secureUrl: string;                        
-    width?: number;                       
-    height?: number;                      
-    config?: object;    
-    transformationUrl?: string;            
-    aspectRatio?: string;               
-    prompt?: string;                    
-    author?: {
-        _id: string,
-        firstname: string,
-        lastname: string
-    };                    
-    createdAt?: Date;                   
-    updatedAt?: Date;                   
-  }
+// interface IImage extends Document{
+//     title: string;
+//     transformation: string;                
+//     publicId: string;                      
+//     secureUrl: string;                        
+//     width?: number;                       
+//     height?: number;                      
+//     config?: object;    
+//     transformationUrl?: string;            
+//     aspectRatio?: string;               
+//     prompt?: string;                    
+//     author?: {
+//         _id: string,
+//         firstname: string,
+//         lastname: string
+//     };                    
+//     createdAt?: Date;                   
+//     updatedAt?: Date;                   
+//   }
   
 
 const ImageSchema = new Schema({
