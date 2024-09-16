@@ -1,9 +1,11 @@
-import React from 'react'
+'use client'
+import React from 'react';
+import Header from '@/components/shared/Header';
 
 const TransformationsPage = () => {
   return (
     <div>
-      Transformations Page
+      <Header title={'Transformation Page'} subtitle={'This is our transformation'}/>
     </div>
   )
 }
