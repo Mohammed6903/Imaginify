@@ -1,33 +1,35 @@
-import mongoose, {Mongoose} from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const MONGODB_URL = process.env.MONGODB_URL as string;
 
 interface MongooseConnection {
-    conn : Mongoose | null;
-    promise: Promise<Mongoose> | null;
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
 }
 
-let cached: MongooseConnection = (global as any).mongoose
+// Cached connection for reuse across hot-reloaded or multiple instances
+let cached: MongooseConnection = (global as any).mongoose;
 
 if (!cached) {
-    cached = (global as any).mongoose = {
-        conn: null, promise: null
-    }
+  cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
-export const connectToDatabase = async () => {
-    if(cached.conn) return cached.conn;
+export const connectToDatabase = async (): Promise<Mongoose | null> => {
+  // Return cached connection if already connected
+  if (cached.conn) return cached.conn;
 
-    if (!MONGODB_URL) {
-        throw new Error('MongoDB URL not provided');
-        console.log('MongoDB URL not provided || UNDEFINED');
+  // Throw error if MongoDB URL is missing
+  if (!MONGODB_URL) {
+    throw new Error("MongoDB URL not provided");
+  }
 
-        cached.promise = cached.promise || mongoose.connect(MONGODB_URL, {
-            dbName: 'imaginify', bufferCommands: false
-        });
+  // If not connected, create a new promise to connect to MongoDB
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URL);
+  }
 
-        cached.conn = await cached.promise;
+  // Await the connection and cache it for future requests
+  cached.conn = await cached.promise;
 
-        return cached.conn;
-    }
-}
+  return cached.conn;
+};

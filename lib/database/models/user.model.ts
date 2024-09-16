@@ -18,10 +18,10 @@ const UserSchema = new Schema({
     email: { type: String, required: true, unique: true },   // Email must be unique
     username: { type: String, required: true, unique: true }, // Username must be unique
     photo: { type: String }, // Optional field for user's photo URL
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
-    planId: { type: String, required: true }, // ID of the user's subscription plan
-    creditBalance: { type: Number, required: true }, // User's credit balance
+    firstname: { type: String, required: true, default: "Default FN" },
+    lastname: { type: String, required: true, default: "Default LN" },
+    planId: { type: String, required: true, default: "Free" }, // ID of the user's subscription plan
+    creditBalance: { type: Number, required: true, default: 500 }, // User's credit balance
     createdAt: { type: Date, default: Date.now }, // Default to the current date
     updatedAt: { type: Date, default: Date.now } // Default to the current date
 });
